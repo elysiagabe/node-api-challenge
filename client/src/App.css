@@ -10,17 +10,13 @@
 }
 
 body {
-  background-color: #F3F3F3;
-  color: #212024;
+  background-color: #393540;
+  color: #F6F8F7;
 }
 
 a {
   text-decoration: none;
-  color: #8149F6;
-}
-
-.App {
-  /* text-align: center; */
+  color: #DCD7F6;
 }
 
 .App-logo {

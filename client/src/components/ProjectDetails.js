@@ -4,7 +4,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const ProjectContainer = styled.div`
-    background-color: #393540;
     width: 80%;
     margin: 0 auto;
     border-radius: 3px;
@@ -18,6 +17,7 @@ const ProjectInfo = styled.div`
 
 const ProjectTitle = styled.h2`
     font-size: 2.4rem;
+    font-weight: 600;
     padding: 40px 0 20px;
 `
 
@@ -90,7 +90,7 @@ const ProjectDetails = () => {
             </ProjectInfo>
 
             <ActionSection>
-                <p style={{textAlign: "center", fontSize: "1.4rem", paddingBottom: "16px" }}>To Do: </p>
+                <p style={{textAlign: "center", fontSize: "1.4rem", paddingBottom: "16px" }}>Project Task List</p>
             {projectActions.map(a => (
                 <ActionCard key={a.id}>
                     <ActionName>{a.description}</ActionName>
