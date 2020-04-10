@@ -1,15 +1,16 @@
 const express = require('express');
 
 const projectModel = require('../data/helpers/projectModel');
+const actionModel = require('../data/helpers/actionModel');
 
 const router = express.Router();
 
 // ~~~ ENDPOINTS ~~~ //
 // GET all projects
 router.get('/', (req, res) => {
-    projectModel.get(req.query)
+    projectModel.get()
     .then(projects => {
-        res.status(200).json(projects)
+        res.json(projects)
     })
     .catch(err => {
         res.status(500).json({ errorMessage: "Projects could not be retrieved." })
@@ -17,17 +18,71 @@ router.get('/', (req, res) => {
 })
 
 // GET project by id
+router.get('/:id', validatedProjId, (req, res) => {
+    projectModel.get(req.params.id)
+    .then(project => {
+        res.status(200).json(project)
+    })
+    .catch(err => {
+        res.status(500).json({ errorMessage: "Specified project could not be retrieved." })
+    })
+})
 
 // GET actions of specified project
+router.get('/:id/actions', validatedProjId, (req, res) => {
+    projectModel.getProjectActions(req.params.id)
+    .then(actions => {
+        res.status(200).json(actions)
+    })
+    .catch(err => {
+        res.status(500).json({ errorMessage: "Could not retrieve actions for the specified project" })
+    })
+})
 
 // POST/create project
+router.post('/', validateProject, (req, res) => {
+    projectModel.insert(req.body)
+    .then(project => {
+        res.status(201).json(project)
+    })
+    .catch(err => {
+        res.status(500).json({ errorMessage: "Project could not be created" })
+    })
+})
 
 // POST/create action for project
+router.post('/:id/actions', validateAction, validatedProjId, (req, res) => {
+    const newAction = { project_id: req.params.id, ...req.body};
+    actionModel.insert(newAction)
+    .then(action => {
+        res.status(201).json(action)
+    })
+    .catch(err => {
+        res.status(500).json({ errorMessage: "Action could not be created" })
+    })
+})
 
 // DELETE project
+router.delete('/:id', validatedProjId, (req, res) => {
+    projectModel.remove(req.params.id)
+    .then(count => {
+        res.status(200).json({ message: `${count} project(s) has/have been deleted`})
+    })
+    .catch(err => {
+        res.status(500).json({ errorMessage: "Specified project could not be deleted" })
+    })
+})
 
 // EDIT project
-
+router.put('/:id', validatedProjId, validateProject, (req, res) => {
+    projectModel.update(req.params.id, req.body)
+    .then(project => {
+        res.status(200).json(project)
+    })
+    .catch(err => {
+        res.status(500).json({ errorMessage: "Project could not be updated" })
+    })
+})
 
 // ~~~ MIDDLEWARE ~~~ //
 // validate project id
