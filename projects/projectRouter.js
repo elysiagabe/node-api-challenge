@@ -73,7 +73,7 @@ router.delete('/:id', validateProjId, (req, res) => {
     })
 })
 
-// EDIT project
+// PUT/edit project
 router.put('/:id', validateProjId, validateProject, (req, res) => {
     projectModel.update(req.params.id, req.body)
     .then(project => {
