@@ -9,6 +9,7 @@ const actionRouter = require('./actions/actionRouter');
 // implement middleware
 // logger?
 server.use(express.json());
+server.use(cors());
 // server.use router here
 server.use('/api/projects', projectRouter);
 server.use('/api/actions', actionRouter);
