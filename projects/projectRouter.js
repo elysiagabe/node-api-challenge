@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 })
 
 // GET project by id
-router.get('/:id', validatedProjId, (req, res) => {
+router.get('/:id', validateProjId, (req, res) => {
     projectModel.get(req.params.id)
     .then(project => {
         res.status(200).json(project)
@@ -29,7 +29,7 @@ router.get('/:id', validatedProjId, (req, res) => {
 })
 
 // GET actions of specified project
-router.get('/:id/actions', validatedProjId, (req, res) => {
+router.get('/:id/actions', validateProjId, (req, res) => {
     projectModel.getProjectActions(req.params.id)
     .then(actions => {
         res.status(200).json(actions)
@@ -51,7 +51,7 @@ router.post('/', validateProject, (req, res) => {
 })
 
 // POST/create action for project
-router.post('/:id/actions', validateAction, validatedProjId, (req, res) => {
+router.post('/:id/actions', validateAction, validateProjId, (req, res) => {
     const newAction = { project_id: req.params.id, ...req.body};
     actionModel.insert(newAction)
     .then(action => {
@@ -63,7 +63,7 @@ router.post('/:id/actions', validateAction, validatedProjId, (req, res) => {
 })
 
 // DELETE project
-router.delete('/:id', validatedProjId, (req, res) => {
+router.delete('/:id', validateProjId, (req, res) => {
     projectModel.remove(req.params.id)
     .then(count => {
         res.status(200).json({ message: `${count} project(s) has/have been deleted`})
@@ -74,7 +74,7 @@ router.delete('/:id', validatedProjId, (req, res) => {
 })
 
 // EDIT project
-router.put('/:id', validatedProjId, validateProject, (req, res) => {
+router.put('/:id', validateProjId, validateProject, (req, res) => {
     projectModel.update(req.params.id, req.body)
     .then(project => {
         res.status(200).json(project)
@@ -86,7 +86,7 @@ router.put('/:id', validatedProjId, validateProject, (req, res) => {
 
 // ~~~ MIDDLEWARE ~~~ //
 // validate project id
-function validatedProjId(req, res, next) {
+function validateProjId(req, res, next) {
     projectModel.get(req.params.id)
     .then(project => {
         if (project) {
