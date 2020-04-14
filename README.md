@@ -40,13 +40,28 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+    We learned about routing with Express, so we can break an application into different request handlers for every URL & HTTP method combo needed. We also learned about Express Middleware, which is an easy and modular way to extend the functionality of Express and allows us to easily implement tasks like logging and authentication. 
+
 - [ ] Describe Middleware?
+
+    Middleware are a sequence of functions that intercept a process, run a function and then either invokes the next middleware function or stops the process entirely. Since Express is a relatively minimalist framework, middleware helps provide much more functionality to our apps. 
+
+    Middleware functions are executed in the other they’re introduced into the server code. They may execute code, make changes to the req or res objects, end the req-res cycle or call the next middleware in the stack. 
+
+    We can use built-in middleware functions (like .use), middleware created by third-parties and brought into our app as an npm module, or we can create our own custom middleware. Typical uses for middleware include but are not limited to request handlers, loggers, authentication and error handling. 
+
 
 - [ ] Describe a Resource?
 
+    RESTful APIs are built on the idea that everything is a resource. A resource is an object with a type, associated data and relationships to other resources. Each resource is accessible via a unique URL, can have multiple representations and are managed via HTTP methods. As an app grows, so does the number of resources, thus, the need to break an application into multiple sub-applications. 
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+    The API can return an HTTP status code in the range of 200-299 (exact number depends on the context). Status codes in this range indicate that the request went through successfully. 
+
 - [ ] How can we partition our application into sub-applications?
+
+    We can use Express Routers! An Express Router acts like a mini Express app with its own Routing and Middleware. It must exist inside of an Express application. Each router file would contain all the endpoints for a specific resource. 
 
 ## Minimum Viable Product
 
